@@ -2,9 +2,9 @@ import { NextRequest } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-const KIMI_API_URL = process.env.KIMI_API_URL || 'https://api.moonshot.cn/v1/chat/completions';
-const KIMI_API_KEY = process.env.KIMI_API_KEY;
-const KIMI_MODEL = process.env.KIMI_MODEL || 'kimi-k2.5';
+const API_URL = process.env.MINIMAX_API_URL || 'https://api.minimaxi.com/v1/chat/completions';
+const API_KEY = process.env.MINIMAX_API_KEY;
+const API_MODEL = process.env.MINIMAX_MODEL || 'MiniMax-Text-01';
 
 const SYSTEM_PROMPT = `你是「说啥好呢」的 AI 助手。请用中文回复，格式如下：
 
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
   const context = searchParams.get('context') || 'Meeting';
   const worry = searchParams.get('worry') || 'Will he think I am critical';
 
-  const effectiveApiKey = apiKey || KIMI_API_KEY;
+  const effectiveApiKey = apiKey || API_KEY;
 
   // No API key - return test page
   if (!effectiveApiKey) {
@@ -77,14 +77,14 @@ document.getElementById('result').textContent='Error: '+err.message;
   const userMessage = `Who: ${targetPerson}\nSaid: ${message}\nContext: ${context}\nWorry: ${worry}`;
 
   try {
-    const response = await fetch(KIMI_API_URL, {
+    const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${effectiveApiKey}`
       },
       body: JSON.stringify({
-        model: KIMI_MODEL,
+        model: API_MODEL,
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: userMessage }
@@ -115,7 +115,7 @@ document.getElementById('result').textContent='Error: '+err.message;
 ${formattedResponse}
 </div>
 <div style="color:#666;font-size:12px;margin-top:20px;">
-Model: ${KIMI_MODEL} | Tokens: ${data.usage?.total_tokens || 'N/A'}
+Model: ${API_MODEL} | Tokens: ${data.usage?.total_tokens || 'N/A'}
 </div>`;
 
     return new Response(html, {
