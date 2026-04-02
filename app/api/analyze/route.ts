@@ -4,7 +4,7 @@ import { AIResponse, UserInput } from '@/types';
 // MiniMax API 配置
 const API_URL = process.env.MINIMAX_API_URL || 'https://api.minimaxi.com/v1/chat/completions';
 const API_KEY = process.env.MINIMAX_API_KEY;
-const API_MODEL = process.env.MINIMAX_MODEL || 'MiniMax-Text-01';
+const API_MODEL = process.env.MINIMAX_MODEL || 'MiniMax-M2.7';
 
 // System Prompt for sensitive-savior
 const SYSTEM_PROMPT = `你是「说啥好呢」的 AI 助手，一位温暖、专业且富有同理心的心理咨询师和沟通顾问。

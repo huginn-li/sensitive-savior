@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 
 const API_URL = process.env.MINIMAX_API_URL || 'https://api.minimaxi.com/v1/chat/completions';
 const API_KEY = process.env.MINIMAX_API_KEY;
-const API_MODEL = process.env.MINIMAX_MODEL || 'MiniMax-Text-01';
+const API_MODEL = process.env.MINIMAX_MODEL || 'MiniMax-M2.7';
 
 const SYSTEM_PROMPT = `你是「说啥好呢」的 AI 助手。请用中文回复，格式如下：
 
