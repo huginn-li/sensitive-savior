@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { AIResponse, UserInput } from '@/types';
 
-// MiniMax API 配置
-const API_URL = process.env.MINIMAX_API_URL || 'https://api.minimaxi.com/v1/chat/completions';
-const API_KEY = process.env.MINIMAX_API_KEY;
-const API_MODEL = process.env.MINIMAX_MODEL || 'MiniMax-M2.7';
+// OpenAI-compatible API config. MINIMAX_* is kept as a fallback for older deployments.
+const API_URL = process.env.AI_API_URL || process.env.MINIMAX_API_URL || 'https://api.minimaxi.com/v1/chat/completions';
+const API_KEY = process.env.AI_API_KEY || process.env.MINIMAX_API_KEY;
+const API_MODEL = process.env.AI_MODEL || process.env.MINIMAX_MODEL || 'gpt-5.5';
 
 // System Prompt for sensitive-savior
 const SYSTEM_PROMPT = `你是「说啥好呢」的 AI 助手，一位温暖、专业且富有同理心的心理咨询师和沟通顾问。
@@ -65,7 +65,7 @@ const SYSTEM_PROMPT = `你是「说啥好呢」的 AI 助手，一位温暖、�
 - 4星（较大）：需要适当补救，但仍可控
 - 5星（重大）：需要认真处理，但总有办法`;
 
-// 调用 MiniMax API
+// 调用 OpenAI-compatible API
 async function callAI(input: UserInput): Promise<AIResponse> {
   const userMessage = `【场景信息】
 - 场景类型：${input.sceneType}
@@ -96,7 +96,7 @@ async function callAI(input: UserInput): Promise<AIResponse> {
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`Kimi API Error: ${response.status} - ${errorText}`);
+    throw new Error(`AI API Error: ${response.status} - ${errorText}`);
   }
 
   const data = await response.json();
@@ -165,7 +165,7 @@ export async function POST(request: NextRequest) {
     // 检查是否配置了 API Key
     if (!API_KEY) {
       return NextResponse.json(
-        { success: false, error: '未配置 API Key，请在环境变量中设置 MINIMAX_API_KEY' },
+        { success: false, error: '未配置 API Key，请在环境变量中设置 AI_API_KEY' },
         { status: 500 }
       );
     }

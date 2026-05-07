@@ -17,12 +17,18 @@
 在 EdgeOne Pages 项目设置里添加：
 
 ```bash
-MINIMAX_API_KEY=你的 MiniMax API Key
-MINIMAX_API_URL=https://api.minimaxi.com/v1/chat/completions
-MINIMAX_MODEL=MiniMax-M2.7
+AI_API_KEY=你的中转站 API Key
+AI_API_URL=你的中转站 chat/completions 地址
+AI_MODEL=gpt-5.5
 ```
 
 不要把 `.env.local` 上传到 GitHub 或发给别人。
+
+如果你的中转站给的是 OpenAI 兼容地址，通常看起来像：
+
+```bash
+AI_API_URL=https://你的中转站域名/v1/chat/completions
+```
 
 ## EdgeOne Pages 建议配置
 
@@ -58,4 +64,4 @@ Global availability zone excluding Chinese mainland
 3. 能返回分析结果
 4. 访问 `/api/test-kimi` 应该是 404
 
-如果 AI 返回失败，优先检查 EdgeOne Pages 里的 `MINIMAX_API_KEY` 是否填对。
+如果 AI 返回失败，优先检查 EdgeOne Pages 里的 `AI_API_KEY`、`AI_API_URL`、`AI_MODEL` 是否填对。
